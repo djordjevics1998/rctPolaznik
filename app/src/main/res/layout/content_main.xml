@@ -32,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@id/content_main_email"
         app:layout_constraintStart_toStartOf="@id/content_main_email"
         app:layout_constraintEnd_toEndOf="@id/content_main_email"
-        app:layout_constraintBottom_toTopOf="@id/content_main_submit" />
+        app:layout_constraintBottom_toTopOf="@id/content_main_submit"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/content_main_submit"
@@ -42,7 +42,17 @@
         app:layout_constraintTop_toBottomOf="@id/content_main_password"
         app:layout_constraintStart_toStartOf="@id/content_main_password"
         app:layout_constraintEnd_toEndOf="@id/content_main_password"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/content_main_register"
         android:layout_marginTop="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/content_main_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Нисте регистровани? Кликните овде"
+        app:layout_constraintTop_toBottomOf="@id/content_main_submit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
