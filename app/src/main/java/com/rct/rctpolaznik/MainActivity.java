@@ -16,6 +16,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.rct.rctpolaznik.data.User;
+import com.rct.rctpolaznik.fragments.MainMenu;
+import com.rct.rctpolaznik.interfaces.OnFragmentInteractionListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -42,9 +45,12 @@ import static com.rct.rctpolaznik.Global.ACTION_DISPLAY_MESSAGE;
 import static com.rct.rctpolaznik.Global.ARG_MESSAGE;
 import static com.rct.rctpolaznik.Global.ARG_POP;
 import static com.rct.rctpolaznik.Global.ARG_TAG_FRAGMENT;
+import static com.rct.rctpolaznik.Global.TAG_FRAGMENT_LOGIN;
+import static com.rct.rctpolaznik.Global.TAG_FRAGMENT_MAIN_MENU;
+import static com.rct.rctpolaznik.Global.TAG_FRAGMENT_NOT_LOGGED_IN;
 import static com.rct.rctpolaznik.Global.displayMessage;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
     private final Handler handler = new Handler();
     private AppCompatTextView actvMessage;
     private final Runnable hideMessage = new Runnable() {
@@ -92,58 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         initOnResume();
 
-        AppCompatTextView actvRegister = findViewById(R.id.content_main_register);
-        actvRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        final AppCompatEditText acetMail = findViewById(R.id.content_main_email),
-                acetPassword = findViewById(R.id.content_main_password);
-
-        AppCompatButton acbLogin = findViewById(R.id.content_main_submit);
-        acbLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                displayMessage(getBaseContext(), "Hello world!");
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                String url ="https://fanste1998.000webhostapp.com/user/login.php";
-                // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonResponse = new JSONObject(response);
-                                    if(jsonResponse.getInt("status") == 1) Toast.makeText(MainActivity.this, "Успешно сте се пријавили!", Toast.LENGTH_LONG).show();
-                                    else Toast.makeText(MainActivity.this, "Погрешили сте при уносу!", Toast.LENGTH_LONG).show();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(MainActivity.this, getErrorMessage(error), Toast.LENGTH_LONG).show();
-                    }
-                }) {
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("mail", acetMail.getText().toString());
-                        params.put("password", acetPassword.getText().toString());
-                        return params;
-                    }
-                };
-
-                // Add the request to the RequestQueue.
-                queue.add(stringRequest);
-            }
-        });
+        if(savedInstanceState == null) MainMenu.add(getBaseContext(), "test1", 23, true);
     }
 
     private void initOnResume() {
@@ -180,11 +135,37 @@ public class MainActivity extends AppCompatActivity {
         initOnPause();
     }
 
-    private static String getErrorMessage(VolleyError error) {
-        if(error != null) {
-            String err = "Error: " + error.toString();
-            if(error.networkResponse != null) err += " error code:" + error.networkResponse.statusCode;
-            return err;
-        } else return "Unknown error";
+    @Override
+    public void onBackPressed() {
+        /*if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+            return;
+        }*/
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+        if(count != 0)
+        {
+            String lastFragmentName = getSupportFragmentManager().getBackStackEntryAt(count - 1).getName();
+            if (lastFragmentName != null) {
+                switch (lastFragmentName) {
+                    case TAG_FRAGMENT_MAIN_MENU:
+                        finish();
+                        return;
+                    case TAG_FRAGMENT_LOGIN:
+                        MainMenu.add(getBaseContext(), "param", 2, true);
+                        return;
+                    case TAG_FRAGMENT_NOT_LOGGED_IN:
+                        getSupportFragmentManager().popBackStack();
+                        return;
+                    default:
+                        //super.onBackPressed();
+                }
+            }
+        }
+    }
+
+    @Override
+    public User getUser() {
+        return null;
     }
 }
