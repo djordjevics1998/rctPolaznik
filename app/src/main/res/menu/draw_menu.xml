@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:divider="@drawable/border_menu"
+    android:dividerHeight="1px"
+    android:shape="rectangle">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_vesti"
+        android:title="ВЕСТИ" />
+        <item android:id="@+id/nav_takmicenja"
+            android:title="ТАКМИЧЕЊА" />
+        <item android:id="@+id/nav_nagradjeniradovi"
+            android:title="НАГРАЂЕНИ РАДОВИ" />
+        <item android:id="@+id/nav_aktivnosti"
+            android:title="АКТИВНОСТИ" />
+        <item android:id="@+id/nav_nastava"
+            android:title="НАСТАВА" />
+        <item android:id="@+id/nav_kalendar"
+            android:title="КАЛЕНДАР" />
+        <item android:id="@+id/nav_about"
+            android:title="О НАМА" />
+        <item android:id="@+id/nav_linijavesti"
+            android:title="ВРЕМЕНСКА ЛИНИЈА ВЕСТИ" />
+        <item android:id="@+id/nav_drustvenemreze"
+            android:title="ДРУШТВЕНЕ МРЕЖЕ" />
+    </group>
+
+</menu>
