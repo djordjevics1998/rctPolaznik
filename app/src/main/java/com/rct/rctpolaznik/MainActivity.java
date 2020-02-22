@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
                     String tagFragment = intent.getStringExtra(ARG_TAG_FRAGMENT);
                     /*switch (tagFragment) {
                         case TAG_FRAGMENT_COMPANY_INDEX:
-                            setTopbarVisibility(VISIBLE);
+                            setTopbarVisibility(VISIBLE); // komentar
                             break;
                         case TAG_FRAGMENT_VOUCHER_ACTIVATION:
                             Fragment fStory= getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT_STORY);
